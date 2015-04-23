@@ -20,6 +20,12 @@ class BookmarkManager3 < Sinatra::Base
   Link2.create(url: url, title: title, tag2s: tag2s)
   redirect to('/')
   end
+
+  get '/tags/:text' do
+    tag = Tag2.first(text: params[:text])
+    @links = tag ? tag.link2s : []
+    erb :index
+  end
 end
 
 DataMapper.setup(:default, "postgres://localhost/bookmark_manager3_#{env}")
