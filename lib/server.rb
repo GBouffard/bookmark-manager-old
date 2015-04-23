@@ -1,6 +1,14 @@
+require 'sinatra/base'
 require 'data_mapper'
 
 env = ENV['RACK_ENV'] || 'development'
+
+class BookmarkManager3 < Sinatra::Base
+  get '/' do
+  @links = Link2.all
+  erb :index
+end
+end
 
 # we're telling datamapper to use a postgres database on localhost. The name will be "bookmark_manager_test" or "bookmark_manager_development" depending on the environment
 

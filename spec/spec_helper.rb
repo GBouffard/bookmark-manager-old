@@ -1,4 +1,9 @@
+require 'capybara/rspec'
 require 'data_mapper'
+require 'database_cleaner'
+require './lib/server'
+
+Capybara.app = BookmarkManager3
 # Remember environment variables from week 1?
 
 ENV['RACK_ENV'] = 'test' # because we need to know what database to work with
@@ -55,6 +60,7 @@ RSpec.configure do |config|
     mocks.verify_partial_doubles = true
   end
 
+
 # The settings below are suggested to provide a good initial experience
 # with RSpec, but feel free to customize to your heart's content.
 =begin
@@ -103,4 +109,21 @@ RSpec.configure do |config|
   # as the one that triggered the failure.
   Kernel.srand config.seed
 =end
+
+RSpec.configure do |config|
+
+  config.before(:suite) do
+    DatabaseCleaner.strategy = :transaction
+    DatabaseCleaner.clean_with(:truncation)
+  end
+
+  config.before(:each) do
+    DatabaseCleaner.start
+  end
+
+  config.after(:each) do
+    DatabaseCleaner.clean
+  end
+
+end
 end

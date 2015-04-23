@@ -1,2 +1,2 @@
 require './lib/server'
-run BookmarkManager
+run BookmarkManager3
