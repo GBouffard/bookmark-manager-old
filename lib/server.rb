@@ -50,12 +50,12 @@ post '/users' do
                   password: params[:password],
                   password_confirmation: params[:password_confirmation])
 if @user.save
-    session[:user_id] = @user.id
-    redirect to('/')
-  else
-    flash[:notice] = 'Sorry, your passwords do not match'
-    erb :'users/new'
-  end
+  session[:user_id] = @user.id
+  redirect to('/')
+else
+  flash.now[:errors] = @user.errors.full_messages
+  erb :'users/new'
+end
 end
 end
 DataMapper.setup(:default, "postgres://localhost/bookmark_manager3_#{env}")
