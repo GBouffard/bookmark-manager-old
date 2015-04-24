@@ -1,5 +1,4 @@
 require 'sinatra/base'
-require 'data_mapper'
 require 'rack-flash'
 require './lib/link2'
 require './lib/tag2'
@@ -18,7 +17,6 @@ helpers do
 end
   enable :sessions
   use Rack::Flash
-  use Rack::MethodOverride
   set :session_secret, 'super secret'
 
   get '/' do
