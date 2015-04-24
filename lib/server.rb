@@ -17,6 +17,7 @@ helpers do
 end
   enable :sessions
   use Rack::Flash
+  use Rack::MethodOverride
   set :session_secret, 'super secret'
 
   get '/' do
@@ -72,7 +73,13 @@ post '/sessions' do
     flash[:errors] = ['The email or password is incorrect']
     erb :'sessions/new'
   end
-end
+  end
+
+    delete '/sessions' do
+    flash[:notice] = 'Good bye!'
+    session[:user_id] = nil
+    redirect to '/'
+  end
 end
 DataMapper.setup(:default, "postgres://localhost/bookmark_manager3_#{env}")
 
